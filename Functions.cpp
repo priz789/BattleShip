@@ -17,14 +17,22 @@ void ClearBuffer()
 	cin.ignore(cin.rdbuf()->in_avail());
 }
 
-player * CreatePlayer(player* p1)
+player * CreatePlayer(player* p)
 {
-	cout << "Введите имя нового игрока: ";
+	int choice;
+	cout << "Выберите тип нового игрока(1 - Человек, 2 - Бот): ";
 	ClearBuffer();
-	cin.getline(p1->name, 20);
-	ClearBuffer();
+	cin >> choice;
+	if (choice == 1)
+	{
+		cout << endl;
+		cout << "Введите имя нового игрока: ";
+		ClearBuffer();
+		cin.getline(p->name, 20);
+		ClearBuffer();
+	}
 	cout << endl;
-	return p1;
+	return p;
 }
 
 void SaveGameToFile(game*currentGame)
@@ -89,18 +97,30 @@ void GameStart(game*currentGame)
 {
 	if (currentGame==nullptr)
 	{
-		game *newGame = new game;
-		memset(newGame,0,sizeof(game));
+		game *newGame = CreateNewGame();
+		currentGame = newGame;
 		for (int i = 0; i < 100; i++)
 		{
-			newGame->field1[i]->status = 1;
-			newGame->field2[i]->status = 1;
+			currentGame->field1[i]->status = 1;
+			currentGame->field2[i]->status = 1;
 		}
-		newGame->player1 = CreatePlayer(newGame->player1);
-		newGame->player2 = CreatePlayer(newGame->player2);
-		currentGame = newGame;
+		currentGame->player1 = CreatePlayer(currentGame->player1);
+		currentGame->player2 = CreatePlayer(currentGame->player2);
 	}
 	GameTurn(currentGame);
+}
+
+game* CreateNewGame()
+{
+	game*newGame = new game;
+	for (int  i = 0; i < 100; i++)
+	{
+		newGame->field1[i] = new cell;
+		newGame->field2[i] = new cell;
+	}
+	newGame->player1 = new player;
+	newGame->player2 = new player;
+	return newGame;
 }
 
 void GameTurn(game*currentGame)
@@ -113,7 +133,23 @@ void GameTurn(game*currentGame)
 		ClearBuffer();
 		choice = _getch();
 		switch (choice)
-			case 1:
+		{
+		case 1:
+			cout << endl;
+			Attack(currentGame);
+			break;
+		case 2:
+			cout << endl;
+			cout << "Выполняется сохранение." << endl;
+			SaveGameToFile(currentGame);
+			break;
+		case 3:
+			cout << endl;
+			cout << "Выполняется выход в главное меню." << endl;
+			break;
+		default:
+			break;
+		}
 
 	}
 }
@@ -126,5 +162,30 @@ void DrawGameField(game*currentGame)
 
 void ShowScoreTable()
 {
+	return;
+}
+
+void Attack(game*currentGame)
+{
+	if (currentGame != nullptr)
+	{
+		int x;
+		int y;
+		int index;
+		cout << "Введите координаты для атаки: ";
+		ClearBuffer();
+		cin >> x;
+		ClearBuffer();
+		cin >> y;
+		index = (y * 10 + x) - 1;
+		if (currentGame->field1[index]->status != 0)
+		{
+			currentGame->field1[index]->status = 0;
+		}
+		else
+		{
+			cout << "Данная клетка уже не активна!" << endl;
+		}
+	}
 	return;
 }

@@ -28,11 +28,6 @@ void MainMenu()
 			cout << "Выход." << endl;
 			return;
 			break;
-		/*case 27:
-			return;
-			break;*/
-		/*default:
-			break;*/
 		}
 	}
 }

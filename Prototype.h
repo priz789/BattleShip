@@ -28,7 +28,7 @@ struct player
 
 struct cell
 {
-	char column; //абсцисса - "колонка"
+	int column; //абсцисса - "колонка"
 	int row; //ордината - "строчка"
 	int status; //состояние клетки
 };
@@ -37,10 +37,10 @@ struct cell
 
 struct game
 {
-	cell*field1[100];
-	cell*field2[100];
-	player*player1;
-	player*player2;
+	cell*field1[100]; // Массив поля игрока 1
+	cell*field2[100]; // Массив поля игрока 2
+	player*player1; // Данные игрока 1
+	player*player2; // Данные игрока 2
 };
 
 void MainMenu();
@@ -51,6 +51,8 @@ void ClearBuffer();
 void GameStart(game*);
 void ShowScoreTable();
 void DrawGameField(game*);
-
+void GameTurn(game*);
+void Attack(game*);
+game* CreateNewGame();
 
 
