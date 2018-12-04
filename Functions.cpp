@@ -127,36 +127,66 @@ void GameTurn(game*currentGame)
 {
 	bool gameIsOn = 1;
 	int choice;
-	while (gameIsOn)
+	bool isPlayerTurn = 1;
+	do 
 	{
 		DrawGameField(currentGame);
 		ClearBuffer();
-		choice = _getch();
-		switch (choice)
+		if (isPlayerTurn) // Ход человека
 		{
-		case 1:
-			cout << endl;
-			Attack(currentGame);
-			break;
-		case 2:
-			cout << endl;
-			cout << "Выполняется сохранение." << endl;
-			SaveGameToFile(currentGame);
-			break;
-		case 3:
-			cout << endl;
-			cout << "Выполняется выход в главное меню." << endl;
-			break;
-		default:
-			break;
+			choice = _getch();
+			ClearBuffer();
+			switch (choice)
+			{
+			case 1:
+				cout << endl;
+				Attack(currentGame);
+				break;
+			case 2:
+				cout << endl;
+				cout << "Выполняется сохранение." << endl;
+				SaveGameToFile(currentGame);
+				break;
+			case 3:
+				cout << endl;
+				cout << "Выполняется выход в главное меню." << endl;
+				gameIsOn = 0;
+				return;
+				break;
+			default:
+				break;
+			}
 		}
+		else //Ход компьютера
+		{
+			isPlayerTurn = 1;
+		}
+	} while (gameIsOn);
 
-	}
 }
 
 void DrawGameField(game*currentGame)
 {
 	system("cls");
+	cout << endl << endl;
+	cout << "\t  * A B C D E F G H I J *\t\t  * A B C D E F G H I J *" << endl;
+	cout << "\t  *---------------------*\t\t  *---------------------*" << endl;
+	cout << "\t 1| * * * * * * * * * * |\t\t 1| * * * * * * * * * * |" << endl;
+	cout << "\t 2| * * * * * * * * * * |\t\t 2| * * * * * * * * * * |" << endl;
+	cout << "\t 3| * * * * * * * * * * |\t\t 3| * * * * * * * * * * |" << endl;
+	cout << "\t 4| * * * * * * * * * * |\t\t 4| * * * * * * * * * * |" << endl;
+	cout << "\t 5| * * * * * * * * * * |\t\t 5| * * * * * * * * * * |" << endl;
+	cout << "\t 6| * * * * * * * * * * |\t\t 6| * * * * * * * * * * |" << endl;
+	cout << "\t 7| * * * * * * * * * * |\t\t 7| * * * * * * * * * * |" << endl;
+	cout << "\t 8| * * * * * * * * * * |\t\t 8| * * * * * * * * * * |" << endl;
+	cout << "\t 9| * * * * * * * * * * |\t\t 9| * * * * * * * * * * |" << endl;
+	cout << "\t10| * * * * * * * * * * |\t\t10| * * * * * * * * * * |" << endl;
+	cout << "\t  *---------------------*\t\t  *---------------------*" << endl;
+	cout << endl;
+	cout << "\tВыберите следующее действие: " << endl;
+	cout << "\t1. Атака." << endl;
+	cout << "\t2. Сохранить игру." << endl;
+	cout << "\t3. Выйти в главное меню." << endl;
 	return;
 }
 
