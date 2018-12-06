@@ -138,16 +138,16 @@ void GameTurn(game*currentGame)
 			ClearBuffer();
 			switch (choice)
 			{
-			case 1:
+			case '1':
 				cout << endl;
 				Attack(currentGame);
 				break;
-			case 2:
+			case '2':
 				cout << endl;
 				cout << "Выполняется сохранение." << endl;
 				SaveGameToFile(currentGame);
 				break;
-			case 3:
+			case '3':
 				cout << endl;
 				cout << "Выполняется выход в главное меню." << endl;
 				gameIsOn = 0;
@@ -202,7 +202,7 @@ void Attack(game*currentGame)
 		int x;
 		int y;
 		int index;
-		cout << "Введите координаты для атаки: ";
+		cout << "Введите координаты для атаки(в формате \"A1\"): ";
 		ClearBuffer();
 		cin >> x;
 		ClearBuffer();
